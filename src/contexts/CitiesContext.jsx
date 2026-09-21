@@ -27,6 +27,12 @@ function reducer(state, action) {
         isLoading: false,
         error: action.payload,
       };
+    case "city/loaded":
+      return {
+        ...state,
+        currentCity: action.payload,
+        isLoading: false,
+      };
     case "cities/loaded":
       return {
         ...state,
@@ -98,7 +104,7 @@ function CitiesProvider({ children }) {
       const data = await res.json();
 
       dispatch({
-        type: "cities/loaded",
+        type: "city/loaded",
         payload: data,
       });
     } catch {
