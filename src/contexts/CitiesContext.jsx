@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 const CitiesContext = createContext();
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://worldwise-api-8u4o.onrender.com";
 const initialValue = {
   cities: [],
   isLoading: false,

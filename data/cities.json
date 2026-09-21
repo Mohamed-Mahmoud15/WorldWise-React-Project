@@ -1,16 +1,16 @@
 {
   "cities": [
     {
-      "cityName": "Lisbon",
-      "country": "Portugal",
-      "countryCode": "pt",
-      "date": "2027-10-31T15:59:59.138Z",
-      "notes": "My favorite city so far!",
+      "cityName": "Valdilecha",
+      "country": "Spain",
+      "countryCode": "ES",
+      "date": "2026-08-31T21:00:00.000Z",
+      "notes": "dsds",
       "position": {
-        "lat": 38.727881642324164,
-        "lng": -9.140900099907554
+        "lat": "40.29787132441319",
+        "lng": "-3.27392578125"
       },
-      "id": "73930385"
+      "id": "C_I6X7xwQBQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
