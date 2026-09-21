@@ -32,6 +32,8 @@ function Map() {
   const [mapLat, mapLng] = UseUrlPosition();
 
   const { cities } = useCities();
+
+  const [isLocationActive, setIsLocationActive] = useState(false);
   useEffect(
     function () {
       if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
@@ -48,7 +50,13 @@ function Map() {
   return (
     <div className={styles.mapContainer}>
       {!geoLocationPos && (
-        <Button type="position" onClick={getPosition}>
+        <Button
+          type="position"
+          onClick={() => {
+            getPosition();
+            setIsLocationActive(true);
+          }}
+        >
           {isLoadingPos ? "Loading..." : "use Your Position"}
         </Button>
       )}
@@ -62,7 +70,6 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
-
         {cities.map((city) => (
           <Marker
             position={[city.position.lat, city.position.lng]}
@@ -77,8 +84,20 @@ function Map() {
             </Popup>
           </Marker>
         ))}
+
+        {mapLat != null && mapLng != null && (
+          <Marker position={[mapLat, mapLng]}>
+            <Popup>You are here</Popup>
+          </Marker>
+        )}
+        {geoLocationPos && isLocationActive && (
+          <Marker position={[geoLocationPos.lat, geoLocationPos.lng]}>
+            <Popup>You are here</Popup>
+          </Marker>
+        )}
+
         <ChangeCenter position={mapPosition} />
-        <DetectClick />
+        <DetectClick onClick={() => setIsLocationActive(false)} />
       </MapContainer>
     </div>
   );
@@ -89,10 +108,16 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-function DetectClick() {
+function DetectClick({ onClick }) {
   const navigate = useNavigate();
+
   useMapEvents({
-    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+    click: (e) => {
+      onClick();
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+    },
   });
+
+  return null;
 }
 export default Map;
